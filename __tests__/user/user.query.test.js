@@ -5,6 +5,7 @@ const {
 } = require('../../error-messages/user.messages');
 let { superAdminUser, testUser } = require('./user.variables');
 const { setupApp } = require('../helper-functions');
+const { daysForStatistic } = require('./user.variables');
 const { getAllUsers } = require('../../modules/user/user.service');
 
 jest.mock('../../modules/confirm-email/confirmation-email.service');
@@ -118,7 +119,26 @@ describe('queries', () => {
       },
     });
   });
-
+  test('should get all users for statistic', async () => {
+    const res = await operations.query({
+      query: gql`
+        query($days: Int!) {
+          getUsersForStatistic(filter: { days: $days }) {
+            counts
+            labels
+            total
+          }
+        }
+      `,
+      variables: {
+        days: daysForStatistic,
+      },
+    });
+    const usersForStatistic = res.data.getUsersForStatistic;
+    const { counts, labels, total } = usersForStatistic;
+    expect(usersForStatistic).toBeDefined();
+    expect(total).toBeGreaterThanOrEqual(1);
+  });
   test('should recive all users', async () => {
     const { email } = testUser;
     const res = await operations.query({
@@ -487,7 +507,6 @@ describe('Testing obtaining information restrictions', () => {
   });
 
   test('User can obtain the information about himself', async () => {
-    // operations = await setupApp({token: userToken, id: userId, email: userLogin, password: userPassword});
     const userLoginInfo = await operations.mutate({
       mutation: gql`
         mutation($email: String!, $password: String!) {

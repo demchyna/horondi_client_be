@@ -10,6 +10,8 @@ const superAdminUser = {
   password: process.env.SUPER_ADMIN_PASSWORD,
 };
 
+const daysForStatistic = 1000;
+
 const newAdmin = {
   email: 'admintest4@gmail.com',
   firstName: 'Hook',
@@ -41,4 +43,5 @@ module.exports = {
   newAdmin,
   superAdminUser,
   testUser,
+  daysForStatistic,
 };

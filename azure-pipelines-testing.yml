@@ -10,23 +10,35 @@ pool:
   vmImage: 'ubuntu-16.04'
 
 steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
+  - task: DownloadSecureFile@1
+    name: env
+    inputs:
+      secureFile: 'backend-test-env'
+  - task: Bash@3
+    inputs:
+      targetType: 'inline'
+      script: 'mv $(env.secureFilePath) .env '
+  - task: Bash@3
+    inputs:
+      targetType: 'inline'
+      script: 'ls -a'
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '10.x'
+    displayName: 'Install Node.js'
 
-- script: |
-    npm install
-  displayName: 'npm install'
+  - script: |
+      npm install
+      displayName: 'npm install'
 
-- task: DockerCompose@0
-  inputs:
-    containerregistrytype: 'Container Registry'
-    dockerComposeFile: 'docker/docker-compose.yml'
-    action: 'Run a Docker Compose command'
-    dockerComposeCommand: 'up -d'
+  - task: DockerCompose@0
+    inputs:
+      containerregistrytype: 'Container Registry'
+      dockerComposeFile: 'docker/docker-compose.yml'
+      action: 'Run a Docker Compose command'
+      dockerComposeCommand: 'up -d'
 
-- script: |
-    npm run test
-  displayName: 'npm run test'
+  - script: |
+     npm run test
+     displayName: 'npm run test'
 

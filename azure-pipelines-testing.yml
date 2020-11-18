@@ -34,7 +34,7 @@ steps:
   - task: DockerCompose@0
     inputs:
       containerregistrytype: 'Container Registry'
-      dockerComposeFile: 'docker/docker-compose.yml'
+      dockerComposeFile: 'docker/docker-compose.yaml'
       action: 'Run a Docker Compose command'
       dockerComposeCommand: 'up -d'
 

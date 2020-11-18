@@ -12,8 +12,6 @@ variables:
   # Container registry service connection established during pipeline creation
   subscription: 'Visual Studio Enterprise – MPN (734fc759-c3a2-4e22-a478-301dc5b10496)'
   containerRegistry: '{"loginServer":"horondistaging.azurecr.io", "id" : "/subscriptions/734fc759-c3a2-4e22-a478-301dc5b10496/resourceGroups/Horondi/providers/Microsoft.ContainerRegistry/registries/HorondiStaging"}'
-  
-
   # Agent VM image name
   vmImageName: 'ubuntu-16.04'
 
@@ -24,12 +22,13 @@ stages:
   - job: Build    
     steps:
      - task: DownloadSecureFile@1
+       name: env
        inputs:
         secureFile: '.env'
      - task: Bash@3
        inputs:
         targetType: 'inline'
-        script: 'mv $(mySecureFile.secureFilePath) . '
+        script: 'mv $(env.secureFilePath) . '
      - task: Bash@3
        inputs:
         targetType: 'inline'

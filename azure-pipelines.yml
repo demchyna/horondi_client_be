@@ -24,11 +24,11 @@ stages:
      - task: DownloadSecureFile@1
        name: env
        inputs:
-        secureFile: '.env'
+        secureFile: 'backend-env'
      - task: Bash@3
        inputs:
         targetType: 'inline'
-        script: 'mv $(env.secureFilePath) . '
+        script: 'mv $(env.secureFilePath) .env '
      - task: Bash@3
        inputs:
         targetType: 'inline'

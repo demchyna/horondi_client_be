@@ -20,15 +20,15 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Show pwd
-        run: pwd && ls -a
+      - name: Show d
+        run: ls
       - name: Docker Compose Action
         # You may pin to the exact commit or the version.
         # uses: isbang/compose-action@8df5a465825a807c86520a4d86207471b512d249
         uses: isbang/compose-action@v0.1.1
         with:
           # relative path to compose file
-          compose-file: docker/docker-compose.yml
+          compose-file: /home/runner/work/horondi_client_be/horondi_client_be/docker/docker-compose.yml
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
         with:

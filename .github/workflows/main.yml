@@ -26,7 +26,7 @@ jobs:
         uses: isbang/compose-action@v0.1.1
         with:
           # relative path to compose file
-          compose-file: docker/docker-compose.yml
+          compose-file: home/runner/work/horondi_client_be/horondi_client_be/docker/docker-compose.yml
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
         with:

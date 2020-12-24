@@ -20,6 +20,13 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Docker Compose Action
+        # You may pin to the exact commit or the version.
+        # uses: isbang/compose-action@8df5a465825a807c86520a4d86207471b512d249
+        uses: isbang/compose-action@v0.1.1
+        with:
+          # relative path to compose file
+          compose-file: ./docker/docker-compose.yml
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
         with:
@@ -31,8 +38,8 @@ jobs:
 
       - name: fix code coverage paths
         run: | 
-          sed -i 's/\/home\/runner\/work\/horondi_client_fe\/horondi_client_be\//\/github\/workspace\//g' test-report.xml
-          sed -i 's/\/home\/runner\/work\/horondi_client_fe\/horondi_client_be\//\/github\/workspace\//g' coverage/lcov.info
+          sed -i 's/\/home\/runner\/work\/horondi_client_be\/horondi_client_be\//\/github\/workspace\//g' test-report.xml
+          sed -i 's/\/home\/runner\/work\/horondi_client_be\/horondi_client_be\//\/github\/workspace\//g' coverage/lcov.info
       
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
